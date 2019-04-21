@@ -13,7 +13,6 @@ Plugin 'majutsushi/tagbar'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'tell-k/vim-autopep8'
 Plugin 'janko-m/vim-test'
 Plugin 'fatih/vim-go'
 
@@ -36,7 +35,6 @@ call vundle#end()
 
 call glaive#Install()
 Glaive codefmt plugin[mappings]
-Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 
 set shell=/bin/bash
 set tabstop=8
@@ -54,9 +52,7 @@ let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
-
-let g:autopep8_max_line_length=120
-let g:autopep8_aggressive=2
+let g:syntastic_python_flake8_args='--max-line-length=120'
 
 filetype plugin indent on
 syntax on
