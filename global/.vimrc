@@ -44,7 +44,6 @@ set expandtab
 set number
 set exrc
 set secure
-set t_Co=256
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -90,9 +89,7 @@ let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
 let g:airline_theme='gruvbox'
 
-let &colorcolumn=join(range(81,999),",")
-highlight ColorColumn ctermbg=235 guibg=#2c2d27
-let &colorcolumn="80,".join(range(120,999),",")
+set colorcolumn=120
 
 function UseTabs()
     setlocal noexpandtab
