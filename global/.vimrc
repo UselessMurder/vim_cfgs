@@ -27,7 +27,7 @@ Plugin 'google/vim-glaive'
 Plugin 'plytophogy/vim-virtualenv'
 Plugin 'tpope/vim-eunuch'
 
-Plugin 'nanotech/jellybeans.vim'
+Plugin 'morhetz/gruvbox'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'nathanaelkane/vim-indent-guides'
 
@@ -37,13 +37,14 @@ call glaive#Install()
 Glaive codefmt plugin[mappings]
 
 set shell=/bin/bash
-set tabstop=8
-set expandtab
+set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set expandtab
+set number
 set exrc
 set secure
-set number
+set t_Co=256
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -52,19 +53,27 @@ let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
-let g:syntastic_python_flake8_args='--max-line-length=120'
+let g:syntastic_python_checkers=['flake8']
 
 filetype plugin indent on
 syntax on
 
-nmap <C-n> :NERDTreeToggle<CR>
-nmap <C-p> :TagbarToggle<CR>
-nmap <C-k> :IndentGuidesToggle<CR> 
-noremap <leader>g :YcmCompleter GoTo<CR>
-noremap <leader>t :YcmCompleter GoToType<CR>
-noremap <leader>r :YcmCompleter GoToReferences<CR> 
+nmap <silent> <C-J> :FormatCode<CR>
+nmap <silent> <C-N> :NERDTreeToggle<CR>
+nmap <silent> <C-P> :TagbarToggle<CR>
+nmap <silent> <C-K> :IndentGuidesToggle<CR> 
+nmap <silent> <C-@> :SyntasticToggleMode<CR>
+noremap  <leader>g :YcmCompleter GoTo<CR>
+noremap  <leader>t :YcmCompleter GoToType<CR>
+noremap  <leader>r :YcmCompleter GoToReferences<CR>
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+vnoremap <leader>f "_dP
+noremap  <leader>y "+y
+noremap  <leader>p "+p
 
-colorscheme jellybeans
+colorscheme gruvbox
+set background=dark
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
@@ -79,7 +88,7 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰'
 let g:airline_symbols.maxlinenr = ''
-let g:airline_theme='jellybeans'
+let g:airline_theme='gruvbox'
 
 let &colorcolumn=join(range(81,999),",")
 highlight ColorColumn ctermbg=235 guibg=#2c2d27
@@ -98,3 +107,17 @@ function UseSpaces()
     setlocal shiftwidth=4
 endfunction
 command! -bar UseSpaces call UseSpaces()
+
+function CheckPy2()
+    let g:syntastic_python_flake8_exec = 'python2'
+    let g:syntastic_python_flake8_args = ['-m', 'flake8', '--max-line-length=120']
+endfunction
+command! -bar CheckPy2 call CheckPy2()
+
+function CheckPy3()
+    let g:syntastic_python_flake8_exec = 'python3'
+    let g:syntastic_python_flake8_args = ['-m', 'flake8', '--max-line-length=120']
+endfunction
+command! -bar CheckPy3 call CheckPy3()
+
+call CheckPy3()
